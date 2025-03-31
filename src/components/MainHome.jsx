@@ -8,7 +8,16 @@ const MainHome = () => {
     const [answers, setAnswers] = useState([]);
     const [showResults, setShowResults] = useState(false);
 
-    const questions = [{
+    function sortQuestions(a, b) {
+        if (a.id < b.id) {
+            return -1;
+        }
+        if (a.id > b.id) {
+            return 1;
+        }
+        return 0;
+    }
+    let questions = [{
         content: 'Você tende a imaginar como as coisas deveriam ser em uma situação?',
         category: "knower",
         answerCorrect: true,
@@ -109,6 +118,8 @@ const MainHome = () => {
         answerCorrect: true,
         id: 19,
     }];
+
+    questions = questions.sort(sortQuestions);
 
     const handleAnswerClick = (category, answer) => {
         setAnswers(prev => ({
