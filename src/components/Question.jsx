@@ -5,7 +5,7 @@ const Question = props => {
 
     return (
         <div>
-            question
+            {props.content}
         </div>
 
     )
