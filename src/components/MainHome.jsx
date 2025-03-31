@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Radio, Alert } from 'antd';
+import { Row, Col, Button, Radio } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import Step from './Step';
 
