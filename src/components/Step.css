@@ -1,0 +1,20 @@
+.number-step {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    background-color: #000000;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 5px;
+    color: #FFFFFF;
+    font-size: medium;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.title-step {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
