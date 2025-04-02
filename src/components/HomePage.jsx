@@ -12,7 +12,7 @@ const HomePage = props => {
 
     return (
         <Layout>
-            
+
             <Content
                 style={{
                     marginTop: '1%',
@@ -28,12 +28,21 @@ const HomePage = props => {
                         borderRadius: borderRadiusLG,
                     }}
                 >
-                   <MainHome />
+                    <MainHome />
                 </div>
             </Content>
-            <div style={{ height: '600px', alignSelf: 'flex-end'}} className="div-temporary">
-                    div-temporary HomePage
-            </div>
+            
+                <footer className="bg-gray-100 text-center text-gray-700 text-sm footer justify-center align-middle h-[200px] p-[20px] m-[20px]">
+                    Feito com ❤️ por{" "}
+                    <a
+                        href="https://www.instagram.com/neto.euclides_/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-500 hover:underline"
+                    >
+                        Neto
+                    </a>
+                </footer>
         </Layout>
     );
 }

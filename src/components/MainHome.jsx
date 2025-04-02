@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Radio } from 'antd';
+import { Row, Col, Button } from 'antd';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import Step from './Step';
+
+import Question from './Question';
 
 const MainHome = () => {
     const [currentIndexQuestion, setCurrentIndexQuestion] = useState(0);
@@ -17,7 +18,7 @@ const MainHome = () => {
         }
         return 0;
     }
-    let questions = [{
+    let arrayQuestions = [{
         content: 'Você tende a imaginar como as coisas deveriam ser em uma situação?',
         category: "knower",
         answerCorrect: true,
@@ -119,35 +120,43 @@ const MainHome = () => {
         id: 19,
     }];
 
-    questions = questions.sort(sortQuestions);
+    arrayQuestions = arrayQuestions.sort(sortQuestions);
+
+    
 
     const handleAnswerClick = (category, answer) => {
-        setAnswers(prev => ({
-            ...prev,
-            [currentIndexQuestion]: { category, answer }
-        }));
+        
+        setTimeout(() => {
+            setAnswers(prev => ({
+                ...prev,
+                [currentIndexQuestion]: { category, answer }
+            }));
 
-        // Avançar automaticamente para a próxima pergunta, se houver
-        if (currentIndexQuestion < questions.length - 1) {
-            setCurrentIndexQuestion(prev => prev + 1);
-        }
-        console.log(answers)
-        if (Object.values(answers).length >= 19) setShowResults(true);
+            // Avançar automaticamente para a próxima pergunta, se houver
+            if (currentIndexQuestion < arrayQuestions.length - 1) {
+                setCurrentIndexQuestion(prev => prev + 1);
+            }
+            //if (!!answers) console.log(Object.values(answers).findIndex((val, index) => index === currentIndexQuestion))
+            if (Object.values(answers).length >= 19) setShowResults(true);
+        }, 10);
+
+
+
     };
 
     const getMostFrequentCategory = () => {
         let arr = [{
             count: 0,
-            value: "O que sabe",
+            categoryPtBr: "O que sabe",
         }, {
             count: 0,
-            value: "O que sente",
+            categoryPtBr: "O que sente",
         }, {
             count: 0,
-            value: "O que ouve",
+            categoryPtBr: "O que ouve",
         }, {
             count: 0,
-            value: "O que ver",
+            categoryPtBr: "O que ver",
         }];
 
         Object.values(answers).forEach(({ category, answer }) => {
@@ -169,9 +178,11 @@ const MainHome = () => {
 
         arr.sort(compare);
         console.log(arr)
-        return arr[0].value;
+        return arr;
 
     };
+
+    //let listResults = (arr) => arr.map(value, index => <p className='text-5xl font-bold'>value</p>
 
     return (
         <>
@@ -179,45 +190,22 @@ const MainHome = () => {
             <br />
 
             {!showResults ? (
-                <Row className='question justify-start xl:ms-[200px]'>
-                    <Col>
-                        <Row className="content">
-                            <Col>
-                                <Step number={(currentIndexQuestion + 1)} />
-                            </Col>
-                            <Col>
-                                <p className='text-lg'>{questions[currentIndexQuestion].content}</p>
-
-                            </Col>
-
-                        </Row>
-                        <Row className='options m-4'>
-                            <Radio.Group
-                                defaultValue={''}
-                                className='text-lg'
-                                style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
-                            >
-                                <Radio.Button
-                                    type='primary'
-                                    value={true}
-                                    onClick={() => handleAnswerClick(questions[currentIndexQuestion].category, true)}>
-                                    Sim
-                                </Radio.Button>
-                                <Radio.Button
-                                    type='primary'
-                                    value={false}
-                                    onClick={() => handleAnswerClick(questions[currentIndexQuestion].category, false)}>
-                                    Não
-                                </Radio.Button>
-                            </Radio.Group>
-                        </Row>
-                    </Col>
-                </Row>
+                <Question
+                    currentIndexQuestion={currentIndexQuestion}
+                    arrayQuestions={arrayQuestions}
+                    handleAnswerClick={handleAnswerClick}
+                    answers={answers}
+                />
             ) : (
                 <Row className='result justify-center'>
                     <Col>
-                        <h2 className='text-2xl'>Seu perfil mais dominante é:</h2>
-                        <p className='text-5xl font-bold'>{getMostFrequentCategory()}</p>
+                        <h2 className='text-2xl bg-green-600 rounded-2xl text-white ps-4 pe-4'>Seu perfil mais dominante é:</h2>
+                        <p className='text-5xl font-bold'>{getMostFrequentCategory()[0].categoryPtBr}</p>
+                        <br/>
+                        <br/>
+                        <h2 className='text-2xl bg-green-600 rounded-2xl text-white'>Suas porcentagens:</h2>
+                        {getMostFrequentCategory().map((v, index) => <p className='text-2xl'>{v.categoryPtBr.concat(": ", (v.count/5)*100, "%" )}</p>) }
+                        
                     </Col>
                 </Row>
             )}
@@ -234,12 +222,13 @@ const MainHome = () => {
                     <Col>
                         <Button className='m-4' type='primary' icon={<RightOutlined />}
                             onClick={() => setCurrentIndexQuestion(prev => prev + 1)}
-                            disabled={!answers[currentIndexQuestion] || currentIndexQuestion === questions.length - 1}>
+                            disabled={!answers[currentIndexQuestion] || currentIndexQuestion === arrayQuestions.length - 1}>
                             Próxima
                         </Button>
                     </Col>
                 </Row>
             )}
+
         </>
     );
 };
