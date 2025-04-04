@@ -33,7 +33,7 @@ const HomePage = props => {
             </Content>
             
                 <footer className="bg-gray-100 text-center text-gray-700 text-sm footer justify-center align-middle h-[200px] p-[20px] m-[20px]">
-                    Feito com ❤️ por{" "}
+                    Feito por{" "}
                     <a
                         href="https://www.instagram.com/neto.euclides_/"
                         target="_blank"
